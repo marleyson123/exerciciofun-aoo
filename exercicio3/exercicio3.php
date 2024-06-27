@@ -1,37 +1,43 @@
-<?php
-$dados = array(
-array("nome"=> "joao", "salario"=>500, "numfilhos" => 3),
-array("nome"=> "fernando", "salario"=>1000, "numfilhos" => 1),
-array("nome"=> "maria", "salario"=>450, "numfilhos" => 2),
-array("nome"=> "natan", "salario"=>600, "numfilhos" => 4),
-);
 
-foreach($dados as $d){
-    echo"\nNome: ".$d['nome']. "salario:".$d['salario']. "numfilhos:" ['numfilhos'];
-}
- 
-$totalSalario = 0;
-$totalFilhos = 0;
-$maiorSalario = 0;
-$numPessoasAte350 = 0;
+<?php 
+$dados = [
+  ['salario' => 1000, 'filhos'=> 2],
+  ['salario' => 3000, 'filhos'=> 1],
+  ['salario' => 200, 'filhos'=> 3],
+  ['salario' => 350, 'filhos'=> 5],
+  ['salario' => 100, 'filhos'=> 4],
+];
 
-foreach ($dados as $d) {
-    $totalSalario += $d['salario'];
-    $totalFilhos += $d['numfilhos'];
-    if ($d['salario'] > $maiorSalario) {
-        $maiorSalario = $d['salario'];
+function estatistica($dados){
+    $somaSalario = 0;
+    $somaFilhos = 0;
+    $totalPessoas = count($dados);
+    $maiorSalario = 0;
+    $salarioAte350 = 0;
+    foreach($dados as $d){
+        $salario = $d['salario'];
+        $filhos = $d['filhos'];
+
+        $somaSalario += $salario;
+        $somaFilhos += $filhos;
+
+        if($salario > $maiorSalario){
+           $maiorSalario = $salario;
+        }
+        if($salario <= 350){
+            $salarioAte350++;
+        }
+
     }
-    if ($d['salario'] <= 350) {
-        $numPessoasAte350++;
-    }
+
+
+$mediaSalario = $somaSalario/$totalPessoas;
+$mediaFilhos = $somaFilhos/$totalPessoas;
+$porcentagemSalario350 = ($salarioAte350/$totalPessoas)*100;
+ echo"Media do salario da população: " .number_format($mediaSalario,2)."\n";
+ echo"Maior salario: R$ " .number_format($maiorSalario,2)."\n";
+ echo"Media numero de filhos: " .number_format($mediaSalario)."\n";
+ echo"Porcentagem de pessoas com salario ate 350: " .number_format($porcentagemSalario350,2)."\n";
 }
 
-$mediaSalario = $totalSalario / count($dados);
-$mediaFilhos = $totalFilhos / count($dados);
-$percentualAte350 = ($numPessoasAte350 / count($dados)) * 100;
-
-echo "Média de salário: R$" . number_format($mediaSalario, 2, ',', '.') . "\n";
-echo "Média de filhos: " . number_format($mediaFilhos, 2, ',', '.') . "\n";
-echo "Maior salário: R$" . number_format($maiorSalario, 2, ',', '.') . "\n";
-echo "Percentual de pessoas com salário até R$350,00: " . number_format($percentualAte350, 2, ',', '.') . "%\n";
-?>
+ estatistica($dados);
